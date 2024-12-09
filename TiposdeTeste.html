@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Desempenho</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+       body {
+            background: url('Background.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            color: #e6e6e6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Cabeçalho */
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Container principal */
+        .container {
+            margin-top: 60px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+        /* Abas de navegação */
+        .nav-tabs .nav-link {
+            position: relative;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+            padding: 12px 20px;
+            margin: 0 5px;
+            background: transparent;
+            border: none;
+            border-radius: 30px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .nav-tabs .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6a11cb, #2575fc, #ff6f61, #ffd700);
+            z-index: -1;
+            border-radius: 30px;
+            transform: scale(0);
+            transition: transform 0.4s ease;
+        }
+
+        .nav-tabs .nav-link:hover::before {
+            transform: scale(1);
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: #000;
+            background: rgba(255, 255, 255, 0.8);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #fff;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        /* Conteúdo */
+        h1, h2, h3 {
+            color: #e6e6e6;
+        }
+        p {
+            line-height: 1.8;
+            color: #dcdcdc;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #d1b3ff;
+            padding: 15px;
+            text-align: center;
+            border-top: 2px solid #d1b3ff;
+        }
+        footer a {
+            color: #b380ff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 24px;
+            }
+            .nav-tabs .nav-link {
+                font-size: 14px;
+                margin: 0 5px;
+                padding: 8px 10px;
+            }
+        }
+
+        .integrante-card {
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .integrante-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .integrante-card:hover {
+            transform: rotateY(360deg) scale(1.05); /* Efeito de giro e zoom */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            transition: all 0.8s ease-in-out;
+        }
+
+        /* Imagens dos Integrantes */
+        .integrante-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #d1b3ff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Títulos e textos */
+        .integrante-card h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .integrante-card p {
+            color: #dcdcdc;
+            margin-bottom: 8px;
+        }
+    video{
+        margin-left: 170px;
+    } 
+
+    .back-to-top {
+            background-color: #6a11cb;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            text-align: center;
+            line-height: 45px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease-in-out;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: none;
+            z-index: 1000;
+        }
+        .back-to-top:hover {
+            background-color: #2575fc;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <br>
+ 
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#inicio">Definição</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#tiposDeTeste">Tipos de Teste</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#integrantes">Integrantes</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="inicio" class="container tab-pane active"><br>
+                <div class="container">
+                    <h3 >O que é teste de software</h3>
+                    <p class="mt-2">
+                        Testes de software são o processo de avaliar e verificar
+                        se um produto ou aplicativo de software faz o que deveria fazer.
+                        Os benefícios de bons testes 
+                        incluem a prevenção de bugs e a melhoria do desempenho.
+                        Atualmente, os testes de software são mais eficazes quando são contínuos, indicando que os testes começam durante o design, 
+                        continuam conforme o software é desenvolvido e até ocorrem quando implementado em produção. 
+                        Testes contínuos significam que as organizações não precisam esperar que todas as partes sejam implantadas antes que os testes possam começar. 
+                        Shift-left, que está aproximando os testes do design, e shift-right, onde os usuários finais realizam a validação, 
+                        também são filosofias de testes que recentemente ganharam força na comunidade de software. 
+                        Quando sua estratégia de testes e seus planos de gerenciamento são compreendidos, 
+                        a automação de todos os aspectos dos testes se torna essencial para apoiar a velocidade de entrega necessária.
+                    </p>
+
+                    <h3 class="mt-4">Teste de Desempenho</h3>
+                    <p class="mt-3">
+                        O teste de desempenho é uma técnica de teste de software não funcional que determina como a estabilidade, a velocidade, 
+                        a escalabilidade e a capacidade de resposta de um aplicativo se mantêm sob uma determinada carga de trabalho. 
+                        É uma etapa fundamental para garantir a qualidade do software, mas, infelizmente, muitas vezes é vista como uma reflexão tardia, isolada, 
+                        e deve começar depois que o teste funcional for concluído e, na maioria dos casos, depois que o código estiver pronto para ser lançado.
+                    </p>
+                    <h5 class="mt-2">Como fazer testes de desempenho?</h5> 
+                    <p class="mt-2">
+                        As etapas específicas do teste de desempenho variam de uma organização e de um aplicativo para outro. 
+                        Depende de quais indicadores de desempenho a empresa considera mais importantes. No entanto, 
+                        os objetivos gerais dos testes de desempenho são basicamente os mesmos em todos os setores, portanto, 
+                        há um determinado fluxo de trabalho que a maioria dos planos de teste seguirá, Como:
+                        <b>
+                            Identificar o ambiente e as ferramentas de teste, Definir critérios de desempenho aceitáveis, Planejar e projetar testes, 
+                            Preparar o ambiente e as ferramentas de teste,
+                            Executar os testes de desempenho, Resolver e testar novamente
+                        </b>
+                    </p>
+                    <h3 class="mt-4">Ferramentas para Teste de Desempenho</h3>
+                    <p class="mt-3">
+                        Existem várias ferramentas para realizar testes de desempenho, algumas das mais conhecidas incluem:
+                        <ol>
+                            <li>
+                                <b>Apache JMeter: </b> Uma ferramenta de código aberto amplamente utilizada para testar a performance de aplicações web, com suporte para diferentes protocolos (HTTP, FTP, JDBC, etc.).
+                            </li>
+                            <li>
+                                <b> LoadRunner: </b> Uma ferramenta comercial da Micro Focus que oferece simulações de carga para testar a performance de sistemas corporativos.
+                            </li>
+                            <li>
+                                <b>Gatling: </b> Outra ferramenta de código aberto focada em performance, especialmente eficaz para realizar testes de carga em APIs.
+                            </li>
+                            <li>
+                                <b>New Relic: </b> Uma plataforma de monitoramento de desempenho que ajuda a identificar gargalos em tempo real durante a execução de sistemas em produção.
+                            </li>
+                            <li>
+                                <b>Dynatrace:</b> Ferramenta de monitoramento que oferece insights sobre a performance do sistema em tempo real, com foco na otimização de desempenho.
+                            </li>
+                        </ol>
+                    </p>
+                    <h3 class="mt-2 text-center">
+                        Teste de Desempenho entenda como funciona!
+                    </h3>
+                    <video src="./WhatsApp Video 2024-12-08 at 20.25.41.mp4" class=" mt-2 border border-2 rounded-5" controls></video>
+                </div>
+            </div>
+            <div id="tiposDeTeste" class="container tab-pane"><br>
+                <h3 class="text-center">Tipos de Teste</h3>
+                <div class="container">
+                    <p>
+                        <ol>
+                            <li>
+                                <b>Teste de Carga:</b> Avalia como o sistema se comporta sob uma carga específica de usuários ou transações. 
+                                O objetivo é garantir que o sistema consiga lidar com a carga normal e esperada de trabalho sem falhas ou degradação significativa do desempenho.
+                            </li>
+                            <li>
+                                <b>Teste de Estresse: </b> Verifica como o sistema se comporta além dos limites normais, 
+                                simulando situações de sobrecarga para verificar o ponto de falha. Ele identifica os limites de capacidade do sistema e como ele se recupera após a falha.
+                            </li>
+                            <li>
+                                <b>Teste de Escalabilidade: </b> Avalia como o sistema lida com o aumento gradual da carga. 
+                                O objetivo é determinar se o sistema pode crescer (em termos de volume de usuários, dados ou transações) sem comprometer seu desempenho.
+                            </li>
+                            <li>
+                                <b>Teste de Estabilidade (ou Soak Test): </b> Avalia o comportamento do sistema sob carga por um longo período de tempo. 
+                                O objetivo é identificar problemas que podem surgir durante o uso contínuo, como vazamentos de memória ou degradação gradual do desempenho.
+                            </li>
+                            <li>
+                                <b>Teste de Capacidade: </b> Avalia o número máximo de usuários ou transações que o sistema pode suportar antes de alcançar o limite de sua capacidade.
+                            </li>
+                        </ol>
+                    </p>
+                </div>
+            </div>
+            <div id="integrantes" class="container tab-pane"><br>
+                <h3 class="mt-2 text-center">Integrantes</h3>
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <div class="card h-100 text-center bg-dark text-light border-light shadow">
+                                <img src="leone.jpg" class="card-img-top rounded-circle p-3 mx-auto integrante-card" alt="Leone Garcia" style="width: 150px; height: 150px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Leone Garcia</h5>
+                                    <p class="card-text">18 anos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100 text-center bg-dark text-light border-light shadow">
+                                <img src="cecilie.jpg" class="card-img-top rounded-circle p-3 mx-auto integrante-card" alt="Maria Cecília" style="width: 150px; height: 150px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Maria Cecília</h5>
+                                    <p class="card-text">17 anos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100 text-center bg-dark text-light border-light shadow">
+                                <img src="joaogabriel.jpg" class="card-img-top rounded-circle p-3 mx-auto integrante-card" alt="João Gabriel" style="width: 150px; height: 150px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">João Gabriel</h5>
+                                    <p class="card-text">17 anos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100 text-center bg-dark text-light border-light shadow">
+                                <img src="victor.jpg" class="card-img-top rounded-circle p-3 mx-auto integrante-card" alt="Victor Ventura" style="width: 150px; height: 150px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Victor Ventura</h5>
+                                    <p class="card-text">21 anos.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card h-100 text-center bg-dark text-light border-light shadow">
+                                <img src="leticia.jpg" class="card-img-top rounded-circle p-3 mx-auto integrante-card" alt="Letícia Oliveira" style="width: 150px; height: 150px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Letícia Oliveira</h5>
+                                    <p class="card-text">22 anos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Portal de Testes - Todos os direitos reservados</p>
+            <p>Desenvolvido por <a href="#">Sua Empresa</a></p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('.nav-link').on('click', function() {
+                $('.nav-link').removeClass('active');
+                $(this).addClass('active');
+            });
+            // Back to top button
+            const backToTopBtn = $('<button>').addClass('back-to-top').text('↑');
+            $('body').append(backToTopBtn);
+
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 300) {
+                    backToTopBtn.fadeIn();
+                } else {
+                    backToTopBtn.fadeOut();
+                }
+            });
+
+            backToTopBtn.on('click', function() {
+                $('html, body').animate({ scrollTop: 0 }, 800);
+            });
+
+            $('.nav-link').on('click', function() {
+                const target = $(this).attr('href');
+                $('.tab-pane').hide(); // Esconde todas as abas
+                $(target).fadeIn(600); // Mostra a aba com efeito de fade
+            });
+
+            $('.back-to-top').on('click', function() {
+                $('html, body').animate({ scrollTop: 0 }, 1000, 'swing');
+            });
+
+            $('body').css('display', 'none').fadeIn(2000);
+
+
+            $('.btn').on('mousedown', function() {
+                $(this).animate({ opacity: 0.7 }, 100);
+            }).on('mouseup', function() {
+                $(this).animate({ opacity: 1 }, 100);
+            });
+
+            $('.nav-link').on('click', function() {
+                const target = $(this).attr('href');
+                $('.tab-pane').hide(); // Esconde todas as abas
+                $(target).fadeIn(600); // Mostra a aba com efeito de fade
+
+                // Checa visibilidade ao abrir a aba de Integrantes
+                if (target === '#integrantes') {
+                    checkVisibility();
+                }
+            });
+
+            function checkVisibility() {
+                $('.integrante-card').each(function() {
+                    const cardPosition = $(this).offset().top; // Posição do cartão
+                    const scrollPosition = $(window).scrollTop() + $(window).height(); // Posição atual da rolagem
+
+                    // Adiciona a classe 'visible' quando o cartão entra na viewport
+                    if (scrollPosition > cardPosition) {
+                        $(this).addClass('visible');
+                    }
+                });
+            }
+
+            // Verifica a visibilidade ao carregar a página e ao rolar
+            $(window).on('scroll', checkVisibility);
+            checkVisibility(); // Executa a verificação ao carregar a página
+
+            // Transição de abas com animação
+            $('.nav-link').on('click', function() {
+                const target = $(this).attr('href'); // Obtém o destino da aba
+                $('.tab-pane').hide(); // Esconde todas as abas
+                $(target).fadeIn(600); // Mostra a aba com efeito de fade
+            });
+        });
+
+
+        
+        
+    </script>
+</body>
+</html>
